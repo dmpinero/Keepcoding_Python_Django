@@ -23,7 +23,7 @@ def photo_detail(request, pk):
     :para pk: Clave primaria de la foto a recuperar
     :return: objeto HttpResponse con los datos de la respuesta
     """
-    possible_photos = Photo.objects.filter(pk=pk)
+    possible_photos = Photo.objects.filter(pk=pk).select_related("owner") # Obtiene las fotos y la relación con la tabla User
     if len(possible_photos) == 0:
         return HttpResponseNotFound("La imagen que buscas no existe")
     elif len(possible_photos) > 1:
