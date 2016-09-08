@@ -17,9 +17,13 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from photos.views import home, photo_detail
+from users.views import login, logout
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home ),
-    url(r'^photos/(?P<pk>\d+)$', photo_detail) # \d Patrón para uno o más números
+    url(r'^photos/(?P<pk>\d+)$', photo_detail), # \d Patrón para uno o más números
+
+    url(r'^login$', login),
+    url(r'^logout', logout)
 ]
