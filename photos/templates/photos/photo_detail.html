@@ -2,13 +2,16 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bienvenido a Frikr - Como Flickr pero en Friki</title>
+    <title>{{ photo.name }}</title>
 </head>
 
 <body>
-    <h1><{{ photo.name }}/h1>
-    <img src="{{ photo.url }}" alt="{{ photo.description }}" title="{{ photo.name }}" width="400">
-
+    <h1>{{ photo.name }}</h1>
+    <img src="{{ photo.url }}" alt="{{ photo.description }}" title="{{ photo.name }}" width=600>
+    <p>
+        <strong>Autor:</strong>
+        {{ photo.owner.first_name }} {{ photo.owner.last_name }}
+    </p>
     <p>{{ photo.description }}</p>
 </body>
 </html>
