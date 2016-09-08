@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ photo.name }}</title>
-</head>
+{% extends "base.html" %}
 
-<body>
-    {%  include "photos/includes/menu.html" %}
+{% block title %}
+    {{ photo.name }}
+{% endblock %}
+
+{% block body %}
     <h1>{{ photo.name }}</h1>
     <img src="{{ photo.url }}" alt="{{ photo.description }}" title="{{ photo.name }}" width=600>
     <p>
@@ -14,5 +12,4 @@
         {{ photo.owner.first_name }} {{ photo.owner.last_name }}
     </p>
     <p>{{ photo.description }}</p>
-</body>
-</html>
+{% endblock %}
