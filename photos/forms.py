@@ -6,5 +6,5 @@ class PhotoForm(ModelForm):
 
     class Meta:
         model = Photo
-        exclude = ['owner'].
+        exclude = ['owner']
 
