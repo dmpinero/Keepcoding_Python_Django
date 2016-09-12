@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from users.forms import LoginForm
 
+
 def login(request):
     """
     Presenta el formulario de login y gestiona el login de un usuario
@@ -10,24 +11,23 @@ def login(request):
     """
     error_message = ""
 
-    login_form = LoginForm()
-
-
+    login_form = LoginForm(request.POST) if request.method == "POST" else LoginForm()
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('pwd')
+        if login_form.is_valid():  # Django recorre los campos del formulario y aplica a cada uno los validadores
+            username = login_form.cleaned_data.get('username')
+            password = login_form.cleaned_data.get('pwd')
 
-        user = authenticate(username=username, password=password)
-        if user is None:
-            error_message = "Usuario o contraseña incorrecto"
-        else:
-            if user.is_active:
-                django_login(request, user)  # Cambiar el usuario autenticado en el sistema
-                return redirect('/')
+            user = authenticate(username=username, password=password)
+            if user is None:
+                error_message = "Usuario o contraseña incorrecto"
             else:
-                error_message = "Cuenta de usuario inactiva"
+                if user.is_active:
+                    django_login(request, user)  # Cambiar el usuario autenticado en el sistema
+                    return redirect('/')
+                else:
+                    error_message = "Cuenta de usuario inactiva"
 
-    context = {'error': error_message, 'form': login_form }
+    context = {'error': error_message, 'form': login_form}
 
     return render(request, 'users/login.html', context)
 

@@ -6,11 +6,8 @@
 
 {% block body %}
     {{ error }}
-    <form method="post">
+    <form method="post" novalidate>
         {% csrf_token %}
-        <!--<input type="text" id="username" name="username" placeholder="Nombre de usuario">
-        <input type="password" id="pwd" name="pwd" placeholder="Password">
-        -->
         {{ form.as_p }}
         <button type="submit">Login</button>
 
