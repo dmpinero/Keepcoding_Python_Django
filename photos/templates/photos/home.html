@@ -6,12 +6,8 @@
 
     {% if photos_list|length > 0 %}
         <h2>Últimas fotos publicadas</h2>
-        {% for photo in photos_list %}
-            <a href="/photos/{{ photo.pk }}">
-                <img src="{{ photo.url }}" alt="{{ photo.name }}" title="{{ photo.name }}" height=140>
-            </a>
-        {% endfor %}
+        {%  include "photos/includes/photo_loop.html" %}
     {% else %}
-        <p>¡Únete a nosotros y sé el primero en subir una foto!</p>
+        {%  include "photos/includes/join_us.html.html" %}
     {% endif %}
 {% endblock %}
