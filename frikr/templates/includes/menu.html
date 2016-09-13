@@ -1,11 +1,11 @@
-<a href="/">Home</a>
+<a href="{% url 'photos_home' %}">Home</a>
 |
 {% if user.is_authenticated %}
-    <a href="/photos/">Mis fotos</a>
-    <a href="/create">Crear foto</a>
+    <a href="{% url 'photos_my_photos' %}">Mis fotos</a>
+    <a href="{% url 'photos_create' %}">Crear foto</a>
     |
-    <a href="/logout">Logout</a>
+    <a href="{% url 'users_logout' %}">Logout</a>
 {% else %}
-    <a href="/login">Login</a>
+    <a href="{% url 'users_login' %}">Login</a>
 {% endif %}
 <hr>

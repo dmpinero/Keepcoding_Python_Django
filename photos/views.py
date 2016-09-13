@@ -1,10 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import ListView
+from django.urls import reverse
 
 from photos.forms import PhotoForm
 from photos.models import Photo, VISIBILITY_PUBLIC
@@ -34,6 +36,11 @@ class PhotoDetailView(View):
         :return: objeto HttpResponse con los datos de la respuesta
         """
         possible_photos = Photo.objects.filter(pk=pk).select_related("owner")  # Obtiene las fotos y la relación con la tabla User
+        if not request.user.is_authenticated():
+            possible_photos = possible_photos.filter(visibility=VISIBILITY_PUBLIC)
+        else:
+            possible_photos  = possible_photos.filter(Q(visibility=VISIBILITY_PUBLIC) | Q(owner=request.user))
+
         if len(possible_photos) == 0:
             return HttpResponseNotFound("La imagen que buscas no existe")
         elif len(possible_photos) > 1:
@@ -73,7 +80,9 @@ class PhotoCreationView(View):
         if photo_form.is_valid():
             new_photo = photo_form.save()
             photo_form = PhotoForm()  # Pinta el formulario vacío en el siguiente renderizado
-            message = 'Foto creada satisfactoriamente <a href="/photos/{0}">Ver foto</a>'.format(new_photo.pk)
+            message = 'Foto creada satisfactoriamente <a href="{0}">Ver foto</a>'.format(
+                reverse('photos_detail', args=[new_photo.pk])
+            )
 
         context = {'form': photo_form, 'message': message}
         return render(request, 'photos/photo_creation.html', context)

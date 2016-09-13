@@ -36,7 +36,7 @@ class LoginView(View):
             else:
                 if user.is_active:
                     django_login(request, user)  # Cambiar el usuario autenticado en el sistema
-                    return redirect(request.GET.get('next', '/')) # Si existe el atributo next redirige a la página de la que
+                    return redirect(request.GET.get('next', 'photos_home')) # Si existe el atributo next redirige a la página de la que
                                                               # viene, en otro caso redirige a la raiz
                 else:
                     error_message = "Cuenta de usuario inactiva"
@@ -55,5 +55,5 @@ class LogoutView(View):
         if request.user.is_authenticated():
             django_logout(request)
 
-        return redirect('/')
+        return redirect('photos_home')
 
