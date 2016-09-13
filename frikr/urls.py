@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^logout$', LogoutView.as_view()),
 
     url(r'^create$', PhotoCreationView.as_view()),
-    url(r'^photos$', PhotoListView.as_view()),
+    url(r'^photos/$', PhotoListView.as_view()),
     url(r'^photos/(?P<pk>\d+)$', PhotoDetailView.as_view()), # \d Patrón para uno o más números
     url(r'^$', HomeView.as_view())
 ]
