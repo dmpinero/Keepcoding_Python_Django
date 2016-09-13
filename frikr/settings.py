@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'frikr',
     'photos',
     'users',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
