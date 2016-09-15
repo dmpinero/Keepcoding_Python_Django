@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from photos.api import PhotoListAPI
+from photos.api import PhotoListAPI, PhotoDetailAPI
 from photos.views import HomeView, PhotoDetailView, PhotoCreationView, PhotoListView
 
 
@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^$', HomeView.as_view(), name='photos_home'),
 
     # API
-    url(r'^api/1.0/photos/$', PhotoListAPI.as_view(), name='api_photos_list')
+    url(r'^api/1.0/photos/$', PhotoListAPI.as_view(), name='api_photos_list'),
+    url(r'^api/1.0/photos/(?P<pk>\d+)$', PhotoDetailAPI.as_view(), name='api_photos_list_2')
 ]
