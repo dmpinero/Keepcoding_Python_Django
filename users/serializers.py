@@ -33,4 +33,3 @@ class UserSerializer(serializers.Serializer):
         instance.email = validated_data.get('email')
         instance.save()
         return instance
-
