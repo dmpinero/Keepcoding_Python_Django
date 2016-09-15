@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from photos.validators import badwords
+
 LICENSE_COPYRIGHT = 'RIG'
 LICENSE_COPYLEFT = 'LEF'
 LICENSE_CC = 'CC'
@@ -24,7 +26,7 @@ class Photo(models.Model):
     owner = models.ForeignKey(User)
     name = models.CharField(max_length=150)
     url = models.URLField()
-    description = models.TextField(null=True, blank=True) # Se diferencia del Charfield en que un TextField no tiene límite
+    description = models.TextField(null=True, blank=True, validators=[badwords]) # Se diferencia del Charfield en que un TextField no tiene límite
     license = models.CharField(max_length=3, choices=LICENSES, default=LICENSE_CC)
     created_at = models.DateTimeField(auto_now_add=True) # Sólo se actualiza cuando se crea
     modified_at = models.DateTimeField(auto_now=True)    # Se actualiza cuando se crea y cada vez que se actualiza
