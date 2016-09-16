@@ -10,12 +10,11 @@ class UserPermission(BasePermission):
         :param view:
         :return:
         """
-        from users.api import UserDetailAPI
         if request.method == "POST":
             return True
         if request.user.is_superuser:
             return True
-        if isinstance(view, UserDetailAPI):
+        if view.action in ("retrive", "update", "destroy"):
             return True
         return False
 
