@@ -17,6 +17,9 @@ class PhotoListAPI(ListCreateAPIView):
     def get_queryset(self):
         return PhotoQuerySet.get_photos_by_user(self.request.user)
 
+    def perform_create(self, serializer):
+        return serializer.save(owner=self.request.user)  # El usuario propietario de la foto es el autenticado
+
 class PhotoDetailAPI(RetrieveUpdateDestroyAPIView):
     """
     Endpoint de detalle, actualización y borrado de fotos
@@ -24,6 +27,8 @@ class PhotoDetailAPI(RetrieveUpdateDestroyAPIView):
     serializer_class = PhotoSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)  # Los usuarios no autenticados pueden ver fotos pero no actualizar
 
-
     def get_queryset(self):
         return PhotoQuerySet.get_photos_by_user(self.request.user)
+
+    def perform_update(self, serializer):
+        return serializer.save(owner=self.request.user)  # El usuario propietario de la foto es el autenticado
