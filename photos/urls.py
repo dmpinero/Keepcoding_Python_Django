@@ -1,8 +1,11 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
+from rest_framework.routers import DefaultRouter
 
-from photos.api import PhotoListAPI, PhotoDetailAPI
+from photos.api import PhotoViewSet
 from photos.views import HomeView, PhotoDetailView, PhotoCreationView, PhotoListView
 
+router = DefaultRouter()
+router.register('api/1.0/photos', PhotoViewSet, base_name='api_photos')
 
 urlpatterns = [
     url(r'^create$', PhotoCreationView.as_view(), name='photos_create'),
@@ -11,6 +14,5 @@ urlpatterns = [
     url(r'^$', HomeView.as_view(), name='photos_home'),
 
     # API
-    url(r'^api/1.0/photos/$', PhotoListAPI.as_view(), name='api_photos_list'),
-    url(r'^api/1.0/photos/(?P<pk>\d+)$', PhotoDetailAPI.as_view(), name='api_photos_list_2')
+    url(r'', include(router.urls))
 ]

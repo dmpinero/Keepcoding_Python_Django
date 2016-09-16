@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'frikr',
     'photos',
     'users',
+    'files',
     'rest_framework',
 ]
 
